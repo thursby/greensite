@@ -47,14 +47,17 @@ module.exports = function(eleventyConfig) {
   // only content in the `posts/` directory
   eleventyConfig.addCollection("posts", function(collection) {
     return collection.getAllSorted().filter(function(item) {
-      return item.inputPath.match(/^\.\/posts\//) !== null;
+      return item.inputPath.match(/^\src\/posts\//) !== null;
     });
   });
 
   // Don't process folders with static assets e.g. images
-  eleventyConfig.addPassthroughCopy("static/img");
-  eleventyConfig.addPassthroughCopy("admin");
-  eleventyConfig.addPassthroughCopy("_includes/assets/");
+  eleventyConfig.addPassthroughCopy("src/img");
+  eleventyConfig.addPassthroughCopy("src/admin");
+  eleventyConfig.addPassthroughCopy("src/_includes/assets/");
+  eleventyConfig.addPassthroughCopy("src/js/");
+  eleventyConfig.addPassthroughCopy("src/css/");
+  eleventyConfig.addPassthroughCopy("src/fonts/");
 
   /* Markdown Plugins */
   let markdownIt = require("markdown-it");
@@ -86,10 +89,10 @@ module.exports = function(eleventyConfig) {
     dataTemplateEngine: "njk",
     passthroughFileCopy: true,
     dir: {
-      input: ".",
+      input: "src",
       includes: "_includes",
       data: "_data",
-      output: "_site"
+      output: "dist"
     }
   };
 };
